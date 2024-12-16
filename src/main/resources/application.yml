@@ -20,9 +20,9 @@ springdoc:
 logging:
   level:
     org:
-      springframework: DEBUG
-        # r2dbc:
-        #   connection: DEBUG
+      springframework:
+        r2dbc:
+          connection: DEBUG
   
     reactor:
       netty:
