@@ -42,7 +42,7 @@ public class Stock extends AuditEntity {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    @Column(name = "total_cost")
+    @Column(name = "total_cost", nullable = false)
     private double totalCost;
 
     public Stock(final StockDTO stockDto) {

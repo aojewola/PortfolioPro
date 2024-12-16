@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.task.portfoliopro.apiClients.AlphaVantageApiClient;
 import com.task.portfoliopro.apiClients.FinnuhApiClient;
+import com.task.portfoliopro.dto.PortfolioUpdateDTO;
 import com.task.portfoliopro.dto.StockDTO;
 import com.task.portfoliopro.dto.StockPriceDTO;
 import com.task.portfoliopro.entities.Stock;
@@ -40,7 +41,10 @@ public class StockService {
 
     public Mono<Stock> addStock(final StockDTO stockDto) {
         log.info("Added a new {} stock", stockDto.getStockName());
-        return stockRepository.save(new Stock(stockDto));
+        return getCurrentStockPrice(stockDto.getTicker()).flatMap(response -> {
+            stockDto.setPrice(response.getClosePrice()); // ensure that the price is updated 
+            return stockRepository.save(new Stock(stockDto));
+        });
     }
 
     public Mono<Stock> removeStock(final String id) {
@@ -57,13 +61,36 @@ public class StockService {
         return stockRepository.deleteById(id);
     }
 
-    public Mono<Double> calculateTotalValue() {
-        log.info("Calculating total portforlio value");
+    public Mono<PortfolioUpdateDTO> totalPortfolioValue() {
+        log.info("Calculating total initial portforlio value");
         return stockRepository.findAllByIsDeletedFalse()
-        .map(stock -> stock.getPrice() * stock.getShares())
-        .reduce(0.0, Double::sum).subscribeOn(Schedulers.boundedElastic());
+            .map(Stock::getTotalCost) // Sum up the total initial portfolio value
+            .reduce(0.0, Double::sum).flatMap(initial -> 
+            calculateTotalValue(initial).map(result -> result)
+            )
+            .subscribeOn(Schedulers.boundedElastic());
     }
 
+    public Mono<PortfolioUpdateDTO> calculateTotalValue(double initialPortfolioValue) {
+        log.info("Calculating current portfolio value");
+    
+        return stockRepository.findAllByIsDeletedFalse()
+            .flatMap(stock ->
+                getCurrentStockPrice(stock.getTicker())
+                    .map(stockPrice -> stockPrice.getClosePrice() * stock.getShares())
+            )
+            .reduce(0.0, Double::sum) // Sum up the total current portfolio value
+            .map(currentPortfolioValue -> {
+                
+                PortfolioUpdateDTO portfolioUpdateDTO = new PortfolioUpdateDTO();
+                portfolioUpdateDTO.setInitialPortolioValue(initialPortfolioValue);
+                portfolioUpdateDTO.setCurrentPortolioValue(currentPortfolioValue);
+                return portfolioUpdateDTO;
+            })
+            .doOnSuccess(dto -> log.info("Portfolio Update: {}", dto))
+            .subscribeOn(Schedulers.boundedElastic());
+    }
+    
     public Mono<String> stockRealTimeSeries(final String ticker) {
         log.info("Sending request to alpha vantage api to get {} stock price", ticker);
         return alpha.getStockPrice(ticker);

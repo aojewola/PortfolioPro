@@ -2,12 +2,14 @@ spring:
   application:
     name: PortfolioPro
   r2dbc:
-    url: r2dbc:h2:file:///./portfolio3db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: r2dbc:h2:file:///./portfoliopro3db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
   # security:
   #   user:
   #     name: ${username:}
   #     password: ${password:} 
-     
+  test:
+    context:
+      failure-threshold: 0
 
 springdoc:
   api-docs:
@@ -17,8 +19,15 @@ springdoc:
 
 logging:
   level:
-    org.springframework.r2dbc.connection: DEBUG
-    reactor.netty.channel.FluxReceive: DEBUG
+    org:
+      springframework: DEBUG
+        # r2dbc:
+        #   connection: DEBUG
+  
+    reactor:
+      netty:
+        channel:
+          FluxReceive: DEBUG
 
 portfoliopro:
   alpha-vantage-api:

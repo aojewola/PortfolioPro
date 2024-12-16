@@ -1,8 +1,10 @@
 package com.task.portfoliopro.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CompanyDTO {
     private String description;
     private String displaySymbol;

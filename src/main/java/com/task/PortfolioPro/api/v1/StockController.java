@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.task.portfoliopro.dto.PortfolioUpdateDTO;
 import com.task.portfoliopro.dto.StockDTO;
 import com.task.portfoliopro.dto.StockPriceDTO;
 import com.task.portfoliopro.entities.Stock;
@@ -64,9 +65,9 @@ public class StockController extends BaseController {
 
     @GetMapping("/total-value")
     @Operation(summary = "Returns the total value of the portfolio", description = "Calculate the total value of the user portfolio")
-    public Mono<Double> getTotalPortfolioValue() {
+    public Mono<PortfolioUpdateDTO> getTotalPortfolioValue() {
         log.info("Request received to calculate the total portfolio value for the user");
-        return stockService.calculateTotalValue();
+        return stockService.totalPortfolioValue();
     }
 
     @GetMapping("/stock-price")
