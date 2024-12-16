@@ -1,3 +1,30 @@
 spring:
   application:
     name: PortfolioPro
+  r2dbc:
+    url: r2dbc:h2:file:///./portfolio3db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  # security:
+  #   user:
+  #     name: ${username:}
+  #     password: ${password:} 
+     
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui/index.html 
+
+logging:
+  level:
+    org.springframework.r2dbc.connection: DEBUG
+    reactor.netty.channel.FluxReceive: DEBUG
+
+portfoliopro:
+  alpha-vantage-api:
+    url: https://www.alphavantage.co/query
+    api-key: ${ALPHA-API-KEY:}
+  finnhub-api:
+    url: https://finnhub.io/api/v1/search
+    api-key: ${FINNHUB-API-KEY:}
+

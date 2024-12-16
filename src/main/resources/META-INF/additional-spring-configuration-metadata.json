@@ -1,0 +1,52 @@
+{"properties": [
+  {
+    "name": "spring.h2.console.port",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.h2.console.port'"
+  },
+  {
+    "name": "spring.api-docs.path",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.api-docs.path'"
+  },
+  {
+    "name": "spring.swagger-ui.path",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.swagger-ui.path'"
+  },
+  {
+    "name": "portfoliopro.alpha-vantage-api.url",
+    "type": "java.lang.String",
+    "description": "A description for 'portfoliopro.alpha-vantage-api.url'"
+  },
+  {
+    "name": "portfoliopro.alpha-vantage-api.api-key",
+    "type": "java.lang.String",
+    "description": "A description for 'portfoliopro.alpha-vantage-api.api-key'"
+  },
+  {
+    "name": "portfoliopro.iex-api.base-url",
+    "type": "java.lang.String",
+    "description": "A description for 'portfoliopro.iex-api.base-url'"
+  },
+  {
+    "name": "portfoliopro.iex-api.api-key",
+    "type": "java.lang.String",
+    "description": "A description for 'portfoliopro.iex-api.api-key'"
+  },
+  {
+    "name": "portfoliopro.finnhub-api.base-url",
+    "type": "java.lang.String",
+    "description": "A description for 'portfoliopro.finnhub-api.base-url'"
+  },
+  {
+    "name": "portfoliopro.finnhub-api.api-key",
+    "type": "java.lang.String",
+    "description": "A description for 'portfoliopro.finnhub-api.api-key'"
+  },
+  {
+    "name": "portfoliopro.finnhub-api.url",
+    "type": "java.lang.String",
+    "description": "A description for 'portfoliopro.finnhub-api.url'"
+  }
+]}
