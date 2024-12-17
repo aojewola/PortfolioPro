@@ -29,6 +29,11 @@ git clone https://github.com/aojewola/PortfolioPro.git
 cd PortfolioPro
 ```
 
+### API KEYS
+Ensure you replace API KEYS in the application.yml file
+${ALPHA-API-KEY:} - https://www.alphavantage.co/support/#api-key
+${FINNHUB-API-KEY:} - https://finnhub.io/dashboard
+
 ### Build the Application
 Ensure you have Java 23 installed. Run the following command:
 ```bash

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PortfolioUpdateDTO {
 
-    private double initialPortolioValue;
+    private double initialPortfolioValue;
 
-    private double currentPortolioValue;
+    private double currentPortfolioValue;
 
 }

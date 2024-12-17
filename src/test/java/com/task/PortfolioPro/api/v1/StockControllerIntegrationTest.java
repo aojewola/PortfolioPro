@@ -108,7 +108,7 @@ public class StockControllerIntegrationTest {
                 .consumeWith(response -> {
                     PortfolioUpdateDTO portfolioValue = response.getResponseBody();
                     assertNotNull(portfolioValue);
-                    assertTrue(portfolioValue.getCurrentPortolioValue() > 0);
+                    assertTrue(portfolioValue.getCurrentPortfolioValue() > 0);
                 });
     }
 

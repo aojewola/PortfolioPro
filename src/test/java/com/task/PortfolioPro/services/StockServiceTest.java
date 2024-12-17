@@ -159,8 +159,8 @@ public class StockServiceTest {
 
         StepVerifier.create(stockService.totalPortfolioValue())
                 .assertNext(dto -> {
-                    assertEquals(14800.0, dto.getInitialPortolioValue());
-                    assertEquals(15300.0, dto.getCurrentPortolioValue());
+                    assertEquals(14800.0, dto.getInitialPortfolioValue());
+                    assertEquals(15300.0, dto.getCurrentPortfolioValue());
                 })
                 .verifyComplete();
 

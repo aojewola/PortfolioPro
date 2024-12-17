@@ -83,8 +83,8 @@ public class StockService {
             .map(currentPortfolioValue -> {
                 
                 PortfolioUpdateDTO portfolioUpdateDTO = new PortfolioUpdateDTO();
-                portfolioUpdateDTO.setInitialPortolioValue(initialPortfolioValue);
-                portfolioUpdateDTO.setCurrentPortolioValue(currentPortfolioValue);
+                portfolioUpdateDTO.setInitialPortfolioValue(initialPortfolioValue);
+                portfolioUpdateDTO.setCurrentPortfolioValue(currentPortfolioValue);
                 return portfolioUpdateDTO;
             })
             .doOnSuccess(dto -> log.info("Portfolio Update: {}", dto))
