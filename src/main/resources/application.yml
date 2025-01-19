@@ -32,8 +32,8 @@ logging:
 portfoliopro:
   alpha-vantage-api:
     url: https://www.alphavantage.co/query
-    api-key: 66GU9T5C2CNZ8GJ4
+    api-key: ${ALPHA-API-KEY:}
   finnhub-api:
     url: https://finnhub.io/api/v1/search
-    api-key: ctspt5hr01qin3c0j6bgctspt5hr01qin3c0j6c0
+    api-key: ${FINNHUB-API-KEY:}
 
