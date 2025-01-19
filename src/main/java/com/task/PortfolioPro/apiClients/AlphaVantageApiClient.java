@@ -46,5 +46,4 @@ public class AlphaVantageApiClient {
                                     .filter(ex -> ex instanceof RuntimeException))
                                     .subscribeOn(Schedulers.boundedElastic());
     }
-
 }

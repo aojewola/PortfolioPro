@@ -29,7 +29,7 @@ import org.springframework.http.MediaType;
 @RequestMapping(value = "/api/v1/portfoliopro", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
-public class StockController extends BaseController {
+public class StockController {
 
     @Autowired
     private StockService stockService;

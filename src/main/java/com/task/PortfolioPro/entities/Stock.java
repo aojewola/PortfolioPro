@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import com.task.portfoliopro.dto.StockDTO;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Validated
+@EqualsAndHashCode(callSuper = false)
 public class Stock extends AuditEntity {
     @Id
     private String id  = UUID.randomUUID().toString();

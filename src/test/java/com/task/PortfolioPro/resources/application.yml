@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: PortfolioPro
+  r2dbc:
+    url: r2dbc:h2:mem:///testdb
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+  devtools:
+    restart:
+      enabled: false

@@ -40,9 +40,9 @@ public class StockService {
     }
 
     public Mono<Stock> addStock(final StockDTO stockDto) {
-        log.info("Added a new {} stock", stockDto.getStockName());
+        log.info("Adding a new {} stock", stockDto.getStockName());
         return getCurrentStockPrice(stockDto.getTicker()).flatMap(response -> {
-            stockDto.setPrice(response.getClosePrice()); // ensure that the price is updated 
+            stockDto.setPrice(response.getClosePrice()); // this ensure that the price is updated 
             return stockRepository.save(new Stock(stockDto));
         });
     }

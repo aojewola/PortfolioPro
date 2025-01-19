@@ -1,4 +1,4 @@
-package com.task.portfoliopro.api.v1;
+package com.task.portfoliopro.exception;
 
 import com.task.portfoliopro.errors.HttpError;
 
@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-public abstract class BaseController {
+public abstract class CustomeExcptionHandler extends  RuntimeException {
     @ExceptionHandler({HttpError.class})
     public ResponseEntity<?> handleError(final HttpError error) {
         log.error(error.getMessage());

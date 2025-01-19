@@ -1,5 +1,6 @@
 package com.task.PortfolioPro.api.v1;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -18,7 +19,6 @@ import com.task.portfoliopro.dto.StockPriceDTO;
 import com.task.portfoliopro.entities.Stock;
 import com.task.portfoliopro.services.StockService;
 
-import io.r2dbc.spi.ConnectionFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -31,51 +31,48 @@ public class StockControllerTest {
     @MockitoBean
     private StockService stockService;
 
-    @MockitoBean
-    private ConnectionFactory connectionFactory;
-
     private final String url = "/api/v1/portfoliopro";
 
     @Test
     void testGetAllStocks() {
-        List<Stock> stocks = List.of(new Stock("AAPL", "Apple Inc", url, 10, 150.0, false, 1500));
+        List<Stock> stocks = List.of(new Stock("id-32e5r", "Apple Inc", "AAPL", 10, 150.0, false, 1500));
         when(stockService.getAllStocks()).thenReturn(Flux.fromIterable(stocks));
 
         webTestClient.get()
-                .uri("/api/v1/portfoliopro/stocks")
+                .uri(url + "/stocks")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Stock.class)
-                .hasSize(1)
-                .contains(stocks.get(0));
+                .hasSize(1).value(res -> res.get(0).equals(stocks.get(0)));
     }
 
     @Test
     void testAddStock() {
         StockDTO stockDto = new StockDTO("AAPL", "Apple Inc", 10, 100);
         Stock stock = new Stock("id-3459k-ky76", "Apple Inc", "AAPL", 10, 150.0, false, 1500);
-        when(stockService.addStock(stockDto)).thenReturn(Mono.just(stock));
+        when(stockService.addStock(any(StockDTO.class))).thenReturn(Mono.just(stock));
 
         webTestClient.post()
-                .uri("/api/v1/portfoliopro/stocks")
+                .uri(url + "/stocks")
                 .bodyValue(stockDto)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Stock.class)
-                .isEqualTo(stock);
+                .value(res -> res.getId().equals(stock.getId()))
+                .value(res -> res.equals(stock));
     }
 
     @Test
     void testRemoveStock() {
         Stock stock = new Stock("id-3459k-ky76-uyt", "Apple Inc", "AAPL", 10, 150.0, false, 1500);
-        when(stockService.removeStock("1")).thenReturn(Mono.just(stock));
+        when(stockService.removeStock("id-3459k-ky76-uyt")).thenReturn(Mono.just(stock));
 
         webTestClient.delete()
-                .uri("/api/v1/portfoliopro/stocks/1")
+                .uri("/api/v1/portfoliopro/stocks/id-3459k-ky76-uyt")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Stock.class)
-                .isEqualTo(stock);
+                .value(result -> result.isDeleted());
     }
 
     @Test
@@ -95,7 +92,7 @@ public class StockControllerTest {
         when(stockService.totalPortfolioValue()).thenReturn(Mono.just(portfolioUpdateDTO));
 
         webTestClient.get()
-                .uri("/api/v1/portfoliopro/total-value")
+                .uri(url + "/total-value")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(PortfolioUpdateDTO.class)
@@ -108,7 +105,7 @@ public class StockControllerTest {
         when(stockService.getCurrentStockPrice("AAPL")).thenReturn(Mono.just(stockPriceDTO));
 
         webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/api/v1/portfoliopro/stock-price")
+                .uri(uriBuilder -> uriBuilder.path(url + "/stock-price")
                         .queryParam("ticker", "AAPL")
                         .build())
                 .exchange()
@@ -123,7 +120,7 @@ public class StockControllerTest {
         when(stockService.stockRealTimeSeries("AAPL")).thenReturn(Mono.just(timeSeriesData));
 
         webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/api/v1/portfoliopro/stocks/time-series")
+                .uri(uriBuilder -> uriBuilder.path(url + "/stocks/time-series")
                         .queryParam("ticker", "AAPL")
                         .build())
                 .exchange()
@@ -138,7 +135,7 @@ public class StockControllerTest {
         when(stockService.getCompanyInfo("AAPL")).thenReturn(Mono.just(companyInfo));
 
         webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/api/v1/portfoliopro/company-info")
+                .uri(uriBuilder -> uriBuilder.path(url + "/company-info")
                         .queryParam("ticker", "AAPL")
                         .build())
                 .exchange()

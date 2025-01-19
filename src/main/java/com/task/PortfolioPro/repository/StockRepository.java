@@ -23,6 +23,6 @@ public interface StockRepository extends R2dbcRepository<Stock, String> {
 
     @Modifying
     @Query("UPDATE stock SET is_deleted = true WHERE id = :id")
-    Mono<Integer> softDeleteById(@Param("id") String id);
+    Mono<String> softDeleteById(@Param("id") String id);
 
 }
